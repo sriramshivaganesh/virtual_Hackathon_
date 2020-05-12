@@ -1,0 +1,61 @@
+import xlrd
+loc=(r'C:\Users\shiva\Downloads\anu btech\Dataset for Problem_Statement_2.xlsx')
+wb=xlrd.open_workbook(loc)
+sheet=wb.sheet_by_index(0)
+_countries=[]
+_agegroup=[]
+for i in range(1,sheet.nrows):
+    k=sheet.cell_value(i,0)
+    _countries.append(k)
+for i in range(1,sheet.ncols-1):
+    t=sheet.cell_value(0,i)
+    _agegroup.append(t)
+import pandas as pd
+df=pd.DataFrame(index=_countries,columns=_agegroup)
+NewYork=[]
+Michigan=[]
+Massachusetts=[]
+Washington=[]
+Chicago=[]
+Ohio=[]
+Maryland=[]
+Colorado=[]
+_list=[NewYork,Michigan,Massachusetts,Washington,Chicago,Ohio,Maryland,Colorado]
+_num=range(1,9)
+def add(self,index):
+    for i in range(1,sheet.ncols-1):
+        a=sheet.cell_value(index,i)
+        self.append(a)
+for i in range(0,len(df)):
+    add(_list[i],_num[i])
+    df.loc[df.index[i]]=_list[i]  #used to append the data horizontally
+x=df
+data=x.swapaxes("index", "columns")
+def display(country):
+    return(data[str(country)])
+def user(country):
+    y=display(str(country))
+    return list(y)
+def plot(county):
+    from matplotlib import pyplot as plt
+    plt.plot(_agegroup,_plz,'bs',label='Deaths in ' + county)
+    plt.xlabel('Age Group')
+    plt.ylabel('Deaths')
+    plt.title('Deaths in ' +county+' by age group')
+    plt.legend()
+    return plt.show()
+#Main program
+k=input('Enter state')
+_plz=user(k)
+_death=display(k)
+stats=pd.DataFrame(_death)
+
+output=0
+while(output!=2):
+    output=int(input('Enter 0 to view stats, Enter 1 to view graph, Enter 2 to exit'))
+    if(output==0):
+        print(stats)
+    elif(output==1):
+        plot(str(k))
+    else:
+         print('EXIT')
